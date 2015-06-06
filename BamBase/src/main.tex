@@ -11,6 +11,10 @@
 
 \usepackage{color}                      % Enable color using
 \usepackage{graphicx}     		     	% More option in included images
+\usepackage{colortbl}
+\usepackage{xcolor}
+
+
 
 \DeclareGraphicsRule{*}{mps}{*}{}
 
@@ -19,13 +23,13 @@
 \usetheme{Madrid}
 \usecolortheme{bam}
 \setbeamertemplate{navigation symbols}{}
-\setbeamertemplate{titlepage}{}
+%\setbeamertemplate{titlepage}{}
 
 
 \title{Retour d'expérience sur Symfony 2}
 \date{}
 \author{Djambazian Nicolas}
-\logo{\includegraphics[width=0.15\linewidth]{Pictures/logo.png}}
+\logo{\includegraphics[width=0.1\linewidth]{Pictures/logo.png}}
 
 
 \begin{document}
@@ -35,21 +39,7 @@
 \frame{\titlepage}
 % \usebackgroundtemplate{}
 
-\begin{frame}{Introduction}
-	\begin{block}{}
-		\begin{itemize}
-			\item Lorem
-			\item Ipsum
-			\item Sin Amet
-		\end{itemize}
-	\end{block}
-\end{frame}
-
-
-\begin{frame}
-	\frametitle{Table des matière}
-	\tableofcontents
-\end{frame}
+\input{sample.tex}
 
 
 \end{document}
