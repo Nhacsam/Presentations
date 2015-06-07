@@ -1,4 +1,4 @@
-\documentclass[8pt, francais]{beamer}
+\documentclass[12pt, francais]{beamer}
 %\usepackage[size=a4,scale=0.7,debug]{beamerposter}
 \usepackage[francais]{babel}
 \usepackage[utf8]{inputenc}
@@ -18,15 +18,12 @@
 
 \DeclareGraphicsRule{*}{mps}{*}{}
 
-
-
-\usetheme{Madrid}
+\usetheme{minimal}
 \usecolortheme{bam}
 \setbeamertemplate{navigation symbols}{}
-%\setbeamertemplate{titlepage}{}
 
 
-\title{Retour d'expérience sur Symfony 2}
+\title{The Minimal Theme}
 \date{}
 \author{Djambazian Nicolas}
 \logo{\includegraphics[width=0.1\linewidth]{Pictures/logo.png}}
@@ -36,10 +33,61 @@
 
 
 % \usebackgroundtemplate{\includegraphics[width=\paperwidth, height=\paperheight]{}}
-\frame{\titlepage}
+
+\maketitle
 % \usebackgroundtemplate{}
 
-\input{sample.tex}
+\part{Tutorial}
+\framepartpage
+
+\section*{First Section }
+\begin{frame}
+	\frametitle{Title}
+	\tableofcontents[hideallsubsections]
+\end{frame}
+
+\section{Second Section }
+
+\begin{frame}{Frame Title ?}
+	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+\end{frame}
+
+
+\section{Third Section }
+
+\begin{frame}
+	\catchline{Lorem ipsum dolor}
+\end{frame}
+
+
+\begin{frame}
+	\catchline{consetetur sadipscing elitr sed diam nonumy ?}
+	Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est
+\end{frame}
+
+
+
+\begin{frame}{Do it}
+	\catchline{sea takimata sanctus est}
+\end{frame}
+
+
+
+\begin{frame}{Do it}
+	\catchline{ no sea takimata sanctus}
+	  \begin{itemize}
+	    \centering
+	    \item item1
+	    \item item2
+	    \item item3
+	    \item item4
+	    \item item5
+	  \end{itemize}
+\end{frame}
+
+
+\plainInverted{Plain inverted !!}
+\plain{Plain not inverted !!}
 
 
 \end{document}
