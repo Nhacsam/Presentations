@@ -1,17 +1,18 @@
-% Copyright 2007 by Till Tantau
+% Copyright 2015 by Nicolas Djambazian
 %
 % This file may be distributed and/or modified
 %
 % 1. under the LaTeX Project Public License and/or
 % 2. under the GNU Public License.
-%
-% See the file doc/licenses/LICENSE for more details.
 
-% \ProvidesPackageRCS $Header: /Users/joseph/Documents/LaTeX/beamer/base/themes/color/beamercolorthemeseahorse.sty,v d02a7cf4d8ae 2010/06/17 09:11:41 rivanvx $
+
+\ProvidesPackage{beamercolorthemebam}[2015/06/07]
 
 
 \mode<presentation>
 
+\usecolortheme{whale}
+\usecolortheme{orchid}
 
 
 \definecolor{bamblue}{HTML}{2A80FF}
@@ -21,13 +22,23 @@
 
 \usecolortheme[named=bamred]{structure}
 
-\setbeamercolor{block title}{bg=bamyellow}
-
+\setbeamercolor{block title}{bg=bamyellow, fg=white}
+\setbeamercolor{block title alerted}{bg=bamred, fg=white}
+\setbeamercolor{block title example}{bg=bamblue, fg=white}
 
 \setbeamercolor{palette primary}{bg=bamblue}
 \setbeamercolor{palette secondary}{bg=bamblue!80}
 \setbeamercolor{palette tertiary}{bg=bamblue!70}
 \setbeamercolor{palette quaternary}{bg=bamblue!50}
+
+\setbeamercolor{sidebar}{bg=bamyellow}
+
+\setbeamercolor{palette sidebar primary}{fg=bamblue}
+\setbeamercolor{palette sidebar secondary}{fg=black}
+\setbeamercolor{palette sidebar tertiary}{fg=black}
+\setbeamercolor{palette sidebar quaternary}{fg=black}
+
+\setbeamercolor{background canvas}{bg=bamyellow!5}
 
 
 \mode

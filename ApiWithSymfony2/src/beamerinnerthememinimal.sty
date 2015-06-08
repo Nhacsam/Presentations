@@ -1,0 +1,124 @@
+% Copyright 2015 by Nicolas Djambazian
+%
+% This file may be distributed and/or modified
+%
+% 1. under the LaTeX Project Public License and/or
+% 2. under the GNU Public License.
+%
+
+\ProvidesPackage{beamerinnerthememinimal}[2015/06/07]
+
+\mode<presentation>
+
+
+\newif\ifbeamer@doSectionPage
+\beamer@doSectionPagefalse
+
+\DeclareOptionBeamer{nosectionpages}{\beamer@doSectionPagetrue}
+\ProcessOptionsBeamer
+
+\newcommand{\insertsectionHEAD}{%
+  \expandafter\insertsectionHEADaux\insertsectionhead}
+
+\newcommand{\insertsectionHEADaux}[3]{\catchlinetitleformat\MakeUppercase{#3}}%
+
+\def\catchlinetitleformat#1{\scshape #1}
+
+
+\useinnertheme[shadow]{rounded}
+
+
+\newcommand{\centeredText}[1]{
+    \begingroup
+    \centering
+    \vfill\vspace{1em}\usebeamerfont{section title}#1\vfill
+    \endgroup
+}
+
+
+
+\newcommand{\plainInverted}[1]{%
+  \begingroup
+  \setbeamercolor{background canvas}{bg=frametitle.fg}
+  \begin{frame}[plain]
+    \centeredText{\usebeamercolor[bg]{frametitle}{\catchlinetitleformat{#1}}}
+  \end{frame}
+  \endgroup
+}
+
+
+\newcommand{\plain}[1]{%
+  \begingroup
+  \setbeamercolor{background canvas}{bg=frametitle.bg}
+  \begin{frame}[plain]
+    \centeredText{\usebeamercolor[fg]{frametitle}\catchlinetitleformat{#1}}
+  \end{frame}
+  \endgroup
+}
+
+
+\newcommand{\catchline}[1]{\centeredText{\usebeamercolor[bg]{palette primary}#1}}
+
+
+% Title page: default
+
+\defbeamertemplate*{title page}{catchline}[1][]
+{
+  \vbox{}
+  \vfill
+  \begingroup
+    \centering
+    \begin{beamercolorbox}[sep=8pt,center,#1]{title}
+      \usebeamerfont{title}\inserttitle\par%
+      \ifx\insertsubtitle\@empty%
+      \else%
+        \vskip0.25em%
+        {\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle\par}%
+      \fi%
+    \end{beamercolorbox}%
+    \vskip1em\par
+    \begin{beamercolorbox}[sep=8pt,center,#1]{author}
+      \usebeamerfont{author}\insertauthor
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{institute}
+      \usebeamerfont{institute}\insertinstitute
+    \end{beamercolorbox}
+    \begin{beamercolorbox}[sep=8pt,center,#1]{date}
+      \usebeamerfont{date}\insertdate
+    \end{beamercolorbox}\vskip0.5em
+    {\usebeamercolor[fg]{titlegraphic}\inserttitlegraphic\par}
+  \endgroup
+  \vfill
+}
+
+% Part page: default
+
+
+\newcommand{\framepartpage}{\plainInverted{\insertpart}}
+
+\setbeamertemplate{part page}
+{
+    \centeredText{\usebeamercolor[bg]{part title}\catchlinetitleformat{\insertpart}}
+}
+
+
+%---------------------------------------------------------------------
+% Sectionpages
+%---------------------------------------------------------------------
+
+
+\ifbeamer@doSectionPage
+\else
+\AtBeginSection[]{\plain{\insertsectionHEAD}}
+\fi
+
+
+%---------------------------------------------------------------------
+% Frame title
+%---------------------------------------------------------------------
+\setbeamertemplate{frametitle}
+{
+    \begin{beamercolorbox}[wd=\paperwidth,leftskip=0.3cm,rightskip=0.3cm,ht=3ex,dp=1.5ex]{frametitle}
+    	 \usebeamerfont{frametitle}{\insertframetitle}%
+    \end{beamercolorbox}
+}
