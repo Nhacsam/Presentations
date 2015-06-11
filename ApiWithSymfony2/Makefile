@@ -1,4 +1,4 @@
-TEX=xelatex
+TEX=pdflatex
 INDEX=makeindex
 GLOSS=makeglossaries
 
