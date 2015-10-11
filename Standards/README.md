@@ -1,6 +1,6 @@
-# Les Stadarts
+# Les Stadards
 
-Presentation sur les diférents types d estandarts / normes / convention qu'on peu introduire dans notre code
+Presentation sur les diférents types de standards / normes / convention qu'on peu introduire dans notre code
 
 
 Sujets Abordés :
