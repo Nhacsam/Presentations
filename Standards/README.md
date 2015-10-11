@@ -1,4 +1,4 @@
-# Les Stadards
+# [WIP] Les Stadards
 
 Presentation sur les diférents types de standards / normes / convention qu'on peu introduire dans notre code
 
