@@ -1,10 +1,27 @@
 
 # Les Standards
 
-From the terminal, pop in:
+Et autres normes et conventions dans le code
 
-  ```yo reveal:slide "Slide Title"```
+--------------------
+## Pourquoi s'imposer des standarts ?
 
-Available options:
+Réduit ou évite :
+ * le temps pour chercher une informations
+ * le temps pour comprendre un élément
+ * les répétitions
+ * les erreurs
 
- ```--markdown --attributes --notes```
+--------------------
+## Bref: gros gain de maintenabilité
+
+------------------
+## Le coding style
+
+Vous y avez tous pensé. Vous savez ce que c'est. On passe
+
+------------------
+
+
+
+
