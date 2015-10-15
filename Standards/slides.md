@@ -212,7 +212,7 @@ objectManagerDispatcher.persistence-layer.js
 -----------------------
 ```php
 public function findUsers() {
-	return $sqlQuery(
+	return sqlQuery(
 		'SELECT id, email, COUNT(DISTINCT id)'.
 		'FROM User'
 	)->getResults();
