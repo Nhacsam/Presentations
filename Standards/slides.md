@@ -253,8 +253,14 @@ public function getUsersByBirthday() {
 
 #### Dress In The city
 [pr1](https://github.com/bamlab/vide-dressing-app/commit/3aa16c9a3bb47f5967b9fe83138a2cac48d1707e) -
-[pr2](https://github.com/bamlab/vide-dressing-app/commit/3e9f5a285e8b400d46b31e11f2b676914fe94da5)
+([pr2](https://github.com/bamlab/vide-dressing-app/commit/3e9f5a285e8b400d46b31e11f2b676914fe94da5))
 
 #### Parkadom
 [pr1](https://github.com/bamlab/parkadom-backend/pull/75/files#diff-1f589dc6345d6dce3c33ec6f84c94db6R7)
 
+#### Guidz
+[pr1](https://github.com/bamlab/guidz-website/pull/67/files#diff-465475eaba3a9bd13a9b341f6e4ad798R1)
+
+
+#### Mumiz
+[pr1](https://github.com/bamlab/mumiz-app/pull/161/files#diff-9f192156ada1382b7a2b17657777a05eR1)
