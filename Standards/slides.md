@@ -241,26 +241,26 @@ public function getUsersByBirthday() {
 ---------------------------
 
 
-#### Sogelab
+Sogelab : 
 [pr1](https://github.com/bamlab/soge-lab-epargne/pull/56/files#diff-cce6907e104f30be2bdef59589018a88R1) -
 [pr2](https://github.com/bamlab/soge-lab-epargne/pull/89/files#diff-125bd100581062e8cc6511b98a329b41R41)
 
-#### 1000Coocker
+1000Coocker : 
 [pr1](https://github.com/bamlab/millecooker-backend/pull/35/files#diff-bdb3eec8d6a76aa091288d27a0780a75R6) avec
 [pr2](https://github.com/bamlab/millecooker-backend/pull/34/files#diff-9c93afef1b2ba3f78d60c0f3cba2fd80R1) -
 [pr3](https://github.com/bamlab/millecooker-core/pull/38/files#diff-cbee11eab4111229bbbb9985ca7b87dfR45) -
 [pr4](https://github.com/bamlab/millecooker-core/pull/36/files#diff-cbee11eab4111229bbbb9985ca7b87dfR205)
 
-#### Dress In The city
+Dress In The city : 
 [pr1](https://github.com/bamlab/vide-dressing-app/commit/3aa16c9a3bb47f5967b9fe83138a2cac48d1707e) -
 ([pr2](https://github.com/bamlab/vide-dressing-app/commit/3e9f5a285e8b400d46b31e11f2b676914fe94da5))
 
-#### Parkadom
+Parkadom : 
 [pr1](https://github.com/bamlab/parkadom-backend/pull/75/files#diff-1f589dc6345d6dce3c33ec6f84c94db6R7)
 
-#### Guidz
+Guidz : 
 [pr1](https://github.com/bamlab/guidz-website/pull/67/files#diff-465475eaba3a9bd13a9b341f6e4ad798R1)
 
 
-#### Mumiz
+Mumiz :
 [pr1](https://github.com/bamlab/mumiz-app/pull/161/files#diff-9f192156ada1382b7a2b17657777a05eR1)
