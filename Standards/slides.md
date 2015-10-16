@@ -44,7 +44,7 @@ Dans chaque des parties qui vont suivre :
 ## Les Conventions de nommage
 
 ------------------------
-### Soyez consistant
+### Soyez cohérents
 
 ```php
 public function findUserById();
@@ -142,7 +142,7 @@ BackboneWrapper
 ------------------------
 ## Les rôles des éléments
 
-Conservé les même rôles pour les même type d'éléments.
+Conservez les même rôles pour les même type d'éléments.
 
 Exemples:
  * Seul le controller connait la vue qui est affiché
