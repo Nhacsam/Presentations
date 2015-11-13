@@ -1,5 +1,12 @@
 [
-    "index.md",
+	{
+		"filename": "index.md",
+		"attr": {"data-separator-vertical": "^-----+\\n"}
+	},
+	{
+		"filename": "dependency-injection.md",
+		"attr": {"data-separator-vertical": "^-----+\\n"}
+	},
 	{
 		"filename": "event-listeners.md",
 		"attr": {"data-separator-vertical": "^-----+\\n"}
