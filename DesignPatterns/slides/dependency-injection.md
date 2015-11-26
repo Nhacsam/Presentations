@@ -15,7 +15,7 @@ var Machin = function (dependence1, dependence2) {
 -----------------
 ### Avantages
 
-* Construction des éléments simplifié
+* Construction des éléments simplifiée
 * Gestion des Singletons plus simple
 * Module Découplé avec ces dépendances
 
@@ -23,7 +23,7 @@ var Machin = function (dependence1, dependence2) {
 ### Incovénient
 
 * Gestion de l'injection complexe
-* Difficulté à navviguer entre les module
+* Difficulté à navviguer entre les modules
 
 --------------------
 ## Découplage et dependency inversion
@@ -133,9 +133,9 @@ Mais on voit bien qui dépend de quoi.
 
 ```js
 var serviceLocator = require('service-locator');
-serviceLocator.define('dep1', require('dep1');
-serviceLocator.define('dep2', require('dep2');
-serviceLocator.define('dep3', require('dep3');
+serviceLocator.define('dep1', require('dep1'));
+serviceLocator.define('dep2', require('dep2'));
+serviceLocator.define('dep3', require('dep3'));
 
 var module = new require('module')(serviceLocator);
 ```
@@ -159,12 +159,12 @@ Les modules ont connaissance des noms de leurs dépendances.
 
 ```js
 var DIContainer = require('DIContainer');
-DIContainer.define('dep1', [], require('dep1');
-DIContainer.define('dep2', [], require('dep2');
-DIContainer.define('dep3', [], require('dep3');
+DIContainer.define('dep1', [], require('dep1'));
+DIContainer.define('dep2', [], require('dep2'));
+DIContainer.define('dep3', [], require('dep3'));
 
-DIContainer.define('module1', ['dep1', 'dep3'], require('module1');
-DIContainer.define('dep3', ['dep1'], require('module2');
+DIContainer.define('module1', ['dep1', 'dep3'], require('module1'));
+DIContainer.define('dep3', ['dep1'], require('module2'));
 // dep2 n'est jamais construit
 ```
 
