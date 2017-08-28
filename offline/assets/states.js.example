@@ -1,0 +1,30 @@
+class TheComponent extends Component {
+  render() {
+    const { fetching, error, data } = this.props;
+
+    if (fetching) {
+      return <ActivityIndicator />;
+    }
+
+    if (error || !data) {
+      return <EmptyPage />;
+    }
+
+    return (
+      <MyComponent>
+        {data.name}
+      </MyComponent>;
+    );
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
