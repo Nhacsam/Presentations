@@ -1,0 +1,176 @@
+// @flow
+
+import { call, put, takeEvery, all } from 'redux-saga/effects';
+import { normalize, schema } from 'normalizr';
+
+type Widget = {
+  id: number,
+  name: string,
+};
+
+export type State = {
+  isLoading: boolean,
+  mainList: number[],
+  entities: {
+    [number]: Widget,
+  },
+  searches: {
+    [query: string]: number[],
+  },
+};
+
+export const REDUCER_NAME = 'widgets';
+type GlobalState = {
+  [REDUCER_NAME]: State,
+};
+
+// Pas d'action type
+
+export type Action =
+  | {
+      type: 'GET_WIDGET_LIST',
+    }
+  | {
+      type: 'GET_WIDGET_LIST_SUCCESS',
+      payload: {
+        widgets: number[],
+      },
+      meta: {
+        entities: {
+          widget: {
+            [number]: Widget,
+          },
+        },
+      },
+    }
+  | {
+      type: 'SEARCH_WIDGET',
+      payload: {
+        query: string,
+      },
+    }
+  | {
+      type: 'SEARCH_WIDGET_SUCCESS',
+      payload: {
+        widgets: number[],
+        query: string,
+      },
+      meta: {
+        entities: {
+          widget: {
+            [number]: Widget,
+          },
+        },
+      },
+    }
+  | {
+      type: 'GET_LIST_FAILURE' | 'SEARCH_FAILURE',
+      payload: Error,
+      error: true,
+    };
+
+// Action Creators
+export function getList(): Action {
+  return { type: 'GET_WIDGET_LIST' };
+}
+
+export type NormalizedWidgetListResult = {
+  result: number[],
+  entities: {
+    widget: {
+      [number]: Widget,
+    },
+  },
+};
+
+export function getListSuccess(normalizedResult: NormalizedWidgetListResult): Action {
+  return {
+    type: 'GET_WIDGET_LIST_SUCCESS',
+    payload: normalizedResult.result,
+    meta: {
+      entities: normalizedResult.entities,
+    },
+  };
+}
+
+export function getListFailure(error: Error): Widget {
+  return {
+    type: 'GET_LIST_FAILURE',
+    payload: error,
+    error: true,
+  };
+}
+
+export default function reducer(state: State = {}, action: Action): State {
+  switch (action.type) {
+    case 'GET_LIST':
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case 'GET_LIST_SUCCESS':
+      return {
+        ...state,
+        mainList: action.payload,
+        entities: action.meta.entities.widgets,
+      };
+    case 'GET_LIST_ERROR':
+      return {
+        ...state,
+        isLoading: false,
+      };
+    default:
+      return state;
+  }
+}
+
+export const widgetByIdSelector = (state: GlobalState, id: number): ?Widget => state[REDUCER_NAME].entities[id];
+
+export const widgetsByIdsSelector = (state: GlobalState, ids: number[]): Widget[] =>
+  ids.map(id => widgetByIdSelector(id)).filter(widget => !!widget);
+
+export const widgetsSelector = (state: GlobalState): Widget[] =>
+  widgetsByIdsSelector(state, state[REDUCER_NAME].mainList);
+
+export const localSearchSelector = R.memoize((state: GlobalState, query: string): Widget[] => {
+  // prettier-ignore
+  return R.compose(
+    R.values,
+    R.filter(R.compose(
+      R.startsWith(query),
+      R.get('name')
+    )),
+  )(state[REDUCER_NAME].entities);
+});
+
+export const apiSearchResultSelector = (state: GlobalState, query: string): ?Widget[] => {
+  if (! state[REDUCER_NAME].searches[query]) {
+    return null;
+  }
+  return widgetsByIdsSelector(state, state[REDUCER_NAME].searches[query]);
+}
+
+export const searchResultSelector = (state: GlobalState, query: string): Widget[] => {
+  const apiSearchResults = apiSearchResultSelector(state, query);
+  if (apiSearchResults) {
+    return apiSearchResults;
+  }
+  return localSearchSelector(state, query);
+};
+
+const getWidgetSchema = new schema.Values(new schema.Entity('widget', {}));
+
+function* getListSaga(): Generator<*, *, *> {
+  try {
+    const widgets = yield call(get, '/widget');
+
+    const normalizedWidgets = normalize(widgets, getWidgetSchema);
+    yield put(getListSuccess(normalizedWidgets));
+  } catch (error) {
+    yield put(getListFailure(error));
+  }
+}
+
+export function* saga(): Generator<*, *, *> {
+  yield all([takeEvery('GET_LIST', getListSaga)]);
+}

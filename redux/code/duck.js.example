@@ -1,0 +1,44 @@
+// Actions
+const GET_LIST = 'my-app/widgets/GET_LIST';
+const GET_LIST_SUCCESS = 'my-app/widgets/GET_LIST_SUCCESS';
+
+// Reducer
+export default function reducer(state = {}, action = {}) {
+  switch (action.type) {
+    case GET_LIST_SUCCESS:
+      return {
+        list: action.payload.widgets,
+      };
+    default:
+      return state;
+  }
+}
+
+// Action Creators
+export function getList() {
+  return { type: GET_LIST };
+}
+
+export function getListSuccess(widgets) {
+  return { type: GET_LIST_SUCCESS, payload: { widgets }, };
+}
+
+// side effects, only as applicable
+// e.g. thunks, epics, etc
+export function getWidgets() {
+  return dispatch => {
+    dispatch(getList());
+    get('/widgets').then(widgets => dispatch(getListSuccess(widgets)));
+  };
+}
+
+
+
+
+
+
+
+
+
+
+
