@@ -1,0 +1,58 @@
+import { call, put, all, takeEvery } from 'redux-saga/effects';
+
+// Actions
+const GET_LIST = 'my-app/widgets/GET_LIST';
+const GET_LIST_SUCCESS = 'my-app/widgets/GET_LIST_SUCCESS';
+
+// Reducer
+export default function reducer(state = {}, action = {}) {
+  switch (action.type) {
+    case GET_LIST_SUCCESS:
+      return {
+        list: action.payload.widgets,
+      };
+    default:
+      return state;
+  }
+}
+
+// Action Creators
+export function getList() {
+  return { type: GET_LIST };
+}
+
+export function getListSuccess(widgets) {
+  return { type: GET_LIST_SUCCESS, payload: { widgets }, };
+}
+
+export function getListFailure(error) {
+  return {
+    type: GET_LIST_FAILURE,
+    payload: error,
+    error: true
+  };
+}
+
+function *getListSaga() {
+  try {
+    const widgets = yield call(get, '/widget');
+    yield put(getListSuccess(widgets));
+  } catch(error) {
+    yield put(getListFailure(error));
+  }
+}
+
+export function* saga() {
+   yield all([
+    takeEvery(GET_LIST, getListSaga),
+  ]);
+}
+
+
+
+
+
+
+
+
+

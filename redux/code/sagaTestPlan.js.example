@@ -1,0 +1,69 @@
+import { testSaga } from 'redux-saga-test-plan';
+
+describe('getListSaga', () => {
+  it('should dispatch result on success', () => {
+    const widgets = [{ id: 1, name: 'widget' }];
+    const saga = testSaga(getListSaga, {});
+
+    saga
+      .next()
+      
+      .call(get, '/widget')
+      .next(widgets)
+
+      .put(getListSuccess(widgets))
+      .next()
+      
+      .isDone();
+  });
+});
+
+describe('postAdjustedAbschlagSaga Saga', () => {
+  it('post the adjusted abschlag with success', () => {
+    const adjustedAbschlagInput = 248;
+    const payload = { adjustedAbschlag: adjustedAbschlagInput };
+
+    const subscription = { ouid: 25, service: 'GAS', billingAccountOuid: 84, subscriptionPart: 37 };
+    const customer = { ouid: 34 };
+
+    const adjustedAbschlagSent = Math.round(adjustedAbschlagInput - subscription.subscriptionPart);
+
+    const response = { status: 'VALIDATED' };
+
+    testSaga(postAdjustedAbschlagSaga, { payload })
+      .next()
+
+      .put(setLoading('postAdjustAbschlag', true))
+      .next()
+
+      .select(currentSubscriptionSelector)
+      .next(subscription)
+      
+      .select(customerSelector)
+      .next(customer)
+      
+      .call(
+        [api, api.adjustMonthlyPayment],
+        adjustedAbschlagSent,
+        subscription.service,
+        customer.ouid,
+        subscription.ouid,
+        subscription.billingAccountOuid
+      )
+      .next(response)
+      
+      .put(NavigationActions.back())
+      .next()
+      
+      .put(setFailed('postAdjustAbschlag', false))
+      .next()
+      
+      .put(setLoading('postAdjustAbschlag', false))
+      .next()
+      
+      .put(refreshData())
+      .next()
+      
+      .isDone();
+  });
+});

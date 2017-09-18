@@ -1,0 +1,107 @@
+// @flow
+import { call, put, takeEvery, all } from 'redux-saga/effects';
+// circular dependency
+import type { State as GlobalState } from '../reducers';
+
+type Widget = {
+  id: number,
+  name: string,
+};
+
+export type State = {
+  isLoading: boolean,
+  widgets: Widget[],
+};
+
+export const REDUCER_NAME = 'widgets';
+type GlobalState = {
+  [REDUCER_NAME]: State,
+};
+
+// Pas d'action type
+
+export type Action =
+  | {
+      type: 'GET_WIDGET_LIST',
+    }
+  | {
+      type: 'GET_WIDGET_LIST_SUCCESS',
+      payload: {
+        widget: Widget[],
+      },
+    }
+  | {
+      type: 'GET_LIST_FAILURE',
+      payload: Error,
+      error: true,
+    };
+
+// Action Creators
+export function getList(): Action {
+  return { type: 'GET_WIDGET_LIST' };
+}
+
+export function getListSuccess(widgets: Widget): Action {
+  return { type: 'GET_WIDGET_LIST_SUCCESS', payload: { widgets } };
+}
+
+export function getListFailure(error: Error): Widget {
+  return {
+    type: 'GET_LIST_FAILURE',
+    payload: error,
+    error: true,
+  };
+}
+
+export default function reducer(
+  state: State = {},
+  action: Action
+): State {
+  switch (action.type) {
+    case 'GET_LIST':
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case 'GET_LIST_SUCCESS':
+      return {
+        ...state,
+        // $FlowExpectError
+        list: action.widgets,
+        isLoading: false,
+      };
+    case 'GET_LIST_ERROR':
+      return {
+        ...state,
+        isLoading: false,
+      };
+    default:
+      return state;
+  }
+}
+
+export const widgetSelector = (state: GlobalState): Widget[] => state[REDUCER_NAME].list;
+
+function* getListSaga(): Generator<*, *, *> {
+  try {
+    const widgets = yield call(get, '/widget');
+    yield put(getListSuccess(widgets));
+  } catch (error) {
+    yield put(getListFailure(error));
+  }
+}
+
+export function* saga(): Generator<*, *, *> {
+  yield all([
+    takeEvery('GET_LIST', getListSaga),
+  ]);
+}
+
+
+
+
+
+
+
+
+

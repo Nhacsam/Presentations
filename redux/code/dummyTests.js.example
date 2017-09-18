@@ -1,0 +1,44 @@
+import reducer, { getList, getListSuccess, listSelector } from '../widgets.js';
+
+describe('widget module', () => {
+  it('should return GET_LIST action', () => {
+    expect(getList()).toBe({
+      type: 'my-app/widgets/GET_LIST',
+    });
+  });
+
+  it('should return GET_LIST_SUCCESS action', () => {
+    expect(getListSuccess('foo')).toBe({
+      type: 'my-app/widgets/GET_LIST_SUCCESS',
+      widgets: 'foo',
+    });
+  });
+
+  it('should handle GET_LIST_SUCCESS action', () => {
+    const action = {
+      type: 'my-app/widgets/GET_LIST_SUCCESS',
+      widgets: ['foo', 'bar'],
+    };
+    expect(reducer(undefined, action)).toEqual({
+      list: ['foo', 'bar'],
+    });
+  });
+
+  it('should select the list', () => {
+    const state = {
+      widgets: {
+        list: 'foobar',
+      },
+    };
+    expect(listSelector(state)).toBe('foobar');
+  });
+});
+
+
+
+
+
+
+
+
+

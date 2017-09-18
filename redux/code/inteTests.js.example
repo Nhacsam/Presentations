@@ -1,0 +1,23 @@
+import reducer, { getList, getListSuccess, listSelector } from '../widgets.js';
+
+describe('widget module', () => {
+  it('should get the list', () => {
+    const list = [
+      { id: 1, name: 'widget 1' },
+      { id: 2, name: 'widget 2' }
+    ];
+    let state = reducer(undefined, getList());
+    state = reducer(state, getListSuccess(list));
+
+    expect(listSelector(state)).toEqual(list);
+  });
+});
+
+
+
+
+
+
+
+
+

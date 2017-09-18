@@ -1,0 +1,32 @@
+import { expectSaga } from 'redux-saga-test-plan';
+
+describe('getListSaga', () => {
+  it('should get the widgets', () => {
+    const widgets = [{ id: 1, name: 'widget' }];
+
+    return expectSaga(getListSaga, {});
+
+      .withReducer(reducer, initialState)
+
+      .provide([ call(get, '/widget'), widgets ])
+
+      .run()
+      .then(({ storeState }) => {
+        expect(listSelector(storeState)).toBe(list);
+      });
+  });
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,131 @@
+describe('getListSaga', () => {
+  const saga = getListSaga({});
+
+  it('should get the list of widgets', () => {
+    expect(saga.next().value).toEqual(call(get, '/widget'));
+  });
+
+  it('should send success action', () => {
+    const widgets = [{ id: 1, name: 'widget' }];
+    expect(saga.next(widgets).value)
+      .toEqual(put(getListSuccess(widgets)));
+  });
+});
+
+describe('orderSimAPICall saga', () => {
+  Date.now = jest.fn(() => '2017');
+
+  beforeEach(() => {
+    tripica.orderSim = jest.fn(login => ({ errorCodeList: [] }));
+  });
+
+  const loginState = {
+    email: 'email@bam.tech',
+    password: 'toto',
+    uuid: null,
+    validationCode: null,
+  };
+
+  const saga = orderSimAPICall(true);
+
+  it('should select the login infos', () => {
+    expect(saga.next().value).toEqual(select(loginStateSelector));
+  });
+
+  it('should select the deliveryAddress', () => {
+    expect(saga.next(loginState).value).toEqual(select(deliveryAddressSelector));
+  });
+
+  const deliveryAddress = {
+    houseNumber: '',
+    street1: '',
+    street2: '',
+    postCode: '',
+    city: '',
+  };
+
+  it('should select the deliveryContact', () => {
+    expect(saga.next(deliveryAddress).value).toEqual(select(deliveryContactSelector));
+  });
+
+  const deliveryContact = {
+    name: '',
+    phoneNumber: '',
+  };
+
+  const login = Trpc.initLogin(null, loginState.email, loginState.password, 0, null);
+
+  it('should get the phone number', () => {
+    expect(saga.next(deliveryContact).value).toEqual(select(choosenPhoneNumberOuidSelector));
+  });
+
+  it('should call tripica getCatalog method', () => {
+    expect(saga.next(null).value).toEqual(call([tripica, 'getCatalog']));
+  });
+
+  const catalog = {
+    allOptions: {
+      DATA: [
+        {
+          name: 'OYDATA100GB',
+          ouid: '0000',
+        },
+      ],
+    },
+  };
+  it('should select the options', () => {
+    expect(saga.next(catalog).value).toEqual(select(newOfferOptionsSelector));
+  });
+
+  Trpc.getCatalogByProductName = jest.fn(() => {});
+  const formatedProductOfferings = [Trpc.getCatalogByProductName('OYDATA100GB', catalog)];
+  const deliveryCharacteristics = Trpc.buildDeliveryCharacteristics(deliveryAddress, deliveryContact);
+
+  it('should select the paymentMean', () => {
+    expect(saga.next(List([Map({ name: 'OYDATA100GB', ouid: '000' })])).value).toEqual(select(paymentMeanSelector));
+  });
+
+  const paymentMean = {
+    name: '',
+    cardNumber: '',
+    holder: '',
+    expirationDate: '',
+    token: '',
+  };
+
+  const formattedPaymentMean = Trpc.createCreditCardPaymentMean(
+    paymentMean.name,
+    paymentMean.cardNumber,
+    paymentMean.holder,
+    paymentMean.expirationDate,
+    paymentMean.token
+  );
+
+  it('should call tripica orderSim method', () => {
+    expect(saga.next(paymentMean).value).toEqual(
+      call(
+        [tripica, 'orderSim'],
+        login,
+        formattedPaymentMean,
+        formatedProductOfferings,
+        false, // FUTURE deliveryMethod
+        deliveryCharacteristics,
+        catalog,
+        null,
+        null
+      )
+    );
+  });
+
+  it('should set uuid', () => {
+    const apiResponse = {
+      uuid: 'aaaa-bbbb-cccc',
+      contextMap: { tokenizerSignature: 'signature' },
+    };
+    expect(saga.next(apiResponse).value).toEqual(put(setUuid('aaaa-bbbb-cccc')));
+  });
+
+  it('should set Payment signature in store', () => {
+    expect(saga.next().value).toEqual(put(setPaymentSignature('signature')));
+  });
+});
